@@ -1,10 +1,11 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import { BooksController } from './books/books.controller';
 import { BooksModule } from './books/books.module';
+import { logger, LoggerMiddleware } from './middleware/logger.middleware';
+import { BooksController } from './books/books.controller';
 
 @Module({
   imports: [
@@ -24,4 +25,16 @@ import { BooksModule } from './books/books.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(logger)
+      .exclude(
+        { path: 'books', method: RequestMethod.POST },
+        'books/(.*)',
+      )
+      .forRoutes(BooksController);
+  }
+  
+}

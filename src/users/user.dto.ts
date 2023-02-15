@@ -9,6 +9,10 @@ export class UserDto {
 
     @IsString()
     @IsNotEmpty()
+    role:string
+
+    @IsString()
+    @IsNotEmpty()
     @MinLength(4)
     @MaxLength(40)
     username: string;

@@ -7,6 +7,10 @@ import { BooksService } from './books.service';
 export class BooksController {
  
     constructor(private booksService:BooksService){}
+    @Get()
+    async listBooks(): Promise<Books[]>{
+        return this.booksService.listBoks();
+    }
 
     @Post()
     async createBooks(@Body() newBook:CreateBook){
