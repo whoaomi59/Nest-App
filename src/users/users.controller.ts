@@ -1,5 +1,4 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
-import { ExecException } from 'child_process';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { CreateUserDto, UpdateUserDto, UserDto } from './user.dto';
 import { User } from './user.entity';
